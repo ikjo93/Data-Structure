@@ -19,7 +19,7 @@ public class BinaryTree {
     }
 
     public BinaryTree(int rootValue) {
-        rootNode = new Node(rootValue, null);
+        rootNode = new Node(rootValue);
         size++;
     }
 
@@ -144,49 +144,47 @@ public class BinaryTree {
     static class Node {
 
         final int value;
-        Node parent;
         Node leftChild;
         Node rightChild;
 
-        Node(int value, Node parent) {
+        Node(int value) {
             this.value = value;
-            this.parent = parent;
         }
 
         public Node add(int value) {
             if (this.value > value) {
-                return addLeft(value, this);
+                return addLeft(value);
             } else if (this.value < value){
-                return addRight(value, this);
+                return addRight(value);
             } else {
                 // TODO : 동일한 노드 삽입 시 처리
                 return null;
             }
         }
 
-        private Node addLeft(int value, Node parent) {
+        private Node addLeft(int value) {
             if (leftChild == null) {
-                leftChild = new Node(value, parent);
+                leftChild = new Node(value);
                 return leftChild;
             }
 
             if (leftChild.value > value) {
-                return leftChild.addLeft(value, leftChild);
+                return leftChild.addLeft(value);
             } else {
-                return leftChild.addRight(value, leftChild);
+                return leftChild.addRight(value);
             }
         }
 
-        private Node addRight(int value, Node parent) {
+        private Node addRight(int value) {
             if (rightChild == null) {
-                rightChild = new Node(value, parent);
+                rightChild = new Node(value);
                 return rightChild;
             }
 
             if (rightChild.value > value) {
-                return rightChild.addLeft(value, rightChild);
+                return rightChild.addLeft(value);
             } else {
-                return rightChild.addRight(value, rightChild);
+                return rightChild.addRight(value);
             }
         }
     }
