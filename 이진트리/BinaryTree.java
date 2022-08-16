@@ -1,5 +1,7 @@
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
 
 public class BinaryTree {
 
@@ -17,7 +19,7 @@ public class BinaryTree {
     }
 
     public BinaryTree(int rootValue) {
-        rootNode = new Node(rootValue);
+        rootNode = new Node(rootValue, null);
         size++;
     }
 
@@ -26,16 +28,51 @@ public class BinaryTree {
      * 추가하려는 노드의 값이 상위 노드 보다 작으면 왼쪽 하위 노드에,
      * 상위 노드 보다 크면 오른쪽 하위 노드에 추가됩니다.
      */
-    public void addNode(int value) {
-        rootNode.add(value);
+    public Node addNode(int value) {
+        Node node = rootNode.add(value);
         size++;
+
+        return node;
     }
 
     /**
-     * 이진 트리의 전체 노드 크기를 반환합니다.
+     * 이진 트리의 전체 노드 개수를 반환합니다.
      */
     public int size() {
         return size;
+    }
+
+    /**
+     * 루트 노드를 반홥합니다.
+     */
+    public Node getRootNode() {
+        return rootNode;
+    }
+
+    /**
+     * 너비 우선 탐색 결과를 리스트 형태로 반환합니다.
+     * ※ 너비 우선 탐색 : 0(루트) 계층 -> 1 계층 -> 2 계층 -> ...
+     */
+    public List<Integer> bfs(Node node) {
+        List<Integer> values = new ArrayList<>();
+
+        Queue<Node> queue = new LinkedList<>();
+        queue.add(node);
+
+        while (!queue.isEmpty()) {
+            Node n = queue.poll();
+            values.add(n.value);
+
+            if (n.leftChild != null) {
+                queue.add(n.leftChild);
+            }
+
+            if (n.rightChild != null) {
+                queue.add(n.rightChild);
+            }
+        }
+
+        return values;
     }
 
     /**
@@ -43,9 +80,9 @@ public class BinaryTree {
      * ※ 전위 순회 : 상위 노드 - 왼쪽 하위 노드 - 오른쪽 하위 노드 순 탐색
      * ※ 전위 순회는 root 노드를 가장 일찍 탐색합니다.
      */
-    public List<Integer> preOrder() {
+    public List<Integer> preOrder(Node node) {
         List<Integer> values = new ArrayList<>();
-        preOrder(rootNode, values);
+        preOrder(node, values);
 
         return values;
     }
@@ -56,8 +93,8 @@ public class BinaryTree {
         }
 
         values.add(node.value);
-        preOrder(node.left, values);
-        preOrder(node.right, values);
+        preOrder(node.leftChild, values);
+        preOrder(node.rightChild, values);
     }
 
     /**
@@ -65,9 +102,9 @@ public class BinaryTree {
      * ※ 중위 순회 : 왼쪽 하위 노드 - 상위 노드 - 오른쪽 하위 노드 순 탐색
      * ※ 중위 순회는 root 노드를 중간 지점애서 탐색합니다.
      */
-    public List<Integer> inOrder() {
+    public List<Integer> inOrder(Node node) {
         List<Integer> values = new ArrayList<>();
-        inOrder(rootNode, values);
+        inOrder(node, values);
 
         return values;
     }
@@ -77,9 +114,9 @@ public class BinaryTree {
             return;
         }
 
-        inOrder(node.left, values);
+        inOrder(node.leftChild, values);
         values.add(node.value);
-        inOrder(node.right, values);
+        inOrder(node.rightChild, values);
     }
 
     /**
@@ -87,9 +124,9 @@ public class BinaryTree {
      * ※ 후위 순회 : 왼쪽 하위 노드 - 오른쪽 하위 노드 - 상위 노드 순 탐색
      * ※ 후위 순회는 root 노드를 가장 마지막애 탐색합니다.
      */
-    public List<Integer> postOrder() {
+    public List<Integer> postOrder(Node node) {
         List<Integer> values = new ArrayList<>();
-        postOrder(rootNode, values);
+        postOrder(node, values);
 
         return values;
     }
@@ -99,54 +136,57 @@ public class BinaryTree {
             return;
         }
 
-        postOrder(node.left, values);
-        postOrder(node.right, values);
+        postOrder(node.leftChild, values);
+        postOrder(node.rightChild, values);
         values.add(node.value);
     }
 
     static class Node {
 
         final int value;
-        Node left;
-        Node right;
+        Node parent;
+        Node leftChild;
+        Node rightChild;
 
-        Node(int value) {
+        Node(int value, Node parent) {
             this.value = value;
+            this.parent = parent;
         }
 
-        public void add(int value) {
+        public Node add(int value) {
             if (this.value > value) {
-                addLeft(value);
+                return addLeft(value, this);
             } else if (this.value < value){
-                addRight(value);
+                return addRight(value, this);
             } else {
-                // TODO : 동일한
+                // TODO : 동일한 노드 삽입 시 처리
+                return null;
             }
         }
 
-        private void addLeft(int value) {
-            if (left == null) {
-                left = new Node(value);
-                return;
+        private Node addLeft(int value, Node parent) {
+            if (leftChild == null) {
+                leftChild = new Node(value, parent);
+                return leftChild;
             }
 
-            if (left.value > value) {
-                left.addLeft(value);
+            if (leftChild.value > value) {
+                return leftChild.addLeft(value, leftChild);
             } else {
-                left.addRight(value);
+                return leftChild.addRight(value, leftChild);
             }
         }
 
-        private void addRight(int value) {
-            if (right == null) {
-                right = new Node(value);
-                return;
+        private Node addRight(int value, Node parent) {
+            if (rightChild == null) {
+                rightChild = new Node(value, parent);
+                return rightChild;
             }
 
-            if (right.value > value) {
-                right.addLeft(value);
+            if (rightChild.value > value) {
+                return rightChild.addLeft(value, rightChild);
             } else {
-                right.addRight(value);
+                return rightChild.addRight(value, rightChild);
             }
         }
     }
