@@ -1,7 +1,7 @@
 import java.util.List;
 import tree.BinaryTree.Node;
 
-public class BinaryTreeTest {
+public class BinaryTreeConsoleTest {
 
     public static void main(String[] args) {
         BinaryTree binaryTree = new BinaryTree(5);
