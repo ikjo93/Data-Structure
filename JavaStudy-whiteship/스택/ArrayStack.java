@@ -50,7 +50,15 @@ public class ArrayStack {
     }
 
     public int get(int index) {
+        checkValidIndex(index);
+
         return values[index];
+    }
+
+    private void checkValidIndex(int index) {
+        if (index < 0 || index > size - 1) {
+            throw new IndexOutOfBoundsException("인덱스 " + index + "은 유효하지 않은 인덱스입니다. 유효 인덱스 : 0 ~ " + (size - 1));
+        }
     }
 
     public int size() {
