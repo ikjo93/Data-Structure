@@ -1,4 +1,4 @@
-package whiteship;
+package whiteship.linkedlist;
 
 public class ListNodeManager {
 
@@ -10,7 +10,6 @@ public class ListNodeManager {
             return nodeToAdd;
         }
 
-        ListNode headNode = head;
         ListNode presentNode = head;
 
         for (int i = 1; i < position; i++) {
@@ -20,7 +19,7 @@ public class ListNodeManager {
         nodeToAdd.setNextNode(presentNode.getNextNode());
         presentNode.setNextNode(nodeToAdd);
 
-        return headNode;
+        return head;
     }
 
     public ListNode remove(ListNode head, int positionToRemove) {
