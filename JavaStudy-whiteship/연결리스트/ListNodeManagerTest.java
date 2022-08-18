@@ -1,4 +1,4 @@
-package whiteship;
+package whiteship.linkedlist;
 
 import static org.assertj.core.api.Assertions.*;
 
@@ -6,9 +6,8 @@ import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import whiteship.linkedlist.ListNode;
-import whiteship.linkedlist.ListNodeManager;
 
+@DisplayName("연결리스트 기능 단위 테스트")
 class ListNodeManagerTest {
 
     ListNodeManager listNodeManager = new ListNodeManager();
