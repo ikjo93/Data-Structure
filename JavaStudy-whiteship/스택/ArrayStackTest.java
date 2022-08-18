@@ -9,62 +9,62 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 @DisplayName("스택 기능 단위테스트")
-class StackTest {
+class ArrayStackTest {
 
-    Stack stack = new Stack();
+    ArrayStack arrayStack = new ArrayStack();
 
     @BeforeEach
     void setup() {
-        stack.push(1);
-        stack.push(2);
-        stack.push(3);
+        arrayStack.push(1);
+        arrayStack.push(2);
+        arrayStack.push(3);
     }
 
     @AfterEach
     void init() {
-        stack.clear();
+        arrayStack.clear();
     }
 
     @Test
-    @DisplayName("스택에 데이터를 추가할 수 있다.")
+    @DisplayName("스택에 데이터를 push 할 수 있다.")
     void push() {
         // when
-        stack.push(4);
-        stack.push(5);
-        stack.push(6);
+        arrayStack.push(4);
+        arrayStack.push(5);
+        arrayStack.push(6);
 
         // then
-        assertThat(stack.get(3)).isEqualTo(4);
-        assertThat(stack.get(4)).isEqualTo(5);
-        assertThat(stack.get(5)).isEqualTo(6);
-        assertThat(stack.size()).isEqualTo(6);
+        assertThat(arrayStack.get(3)).isEqualTo(4);
+        assertThat(arrayStack.get(4)).isEqualTo(5);
+        assertThat(arrayStack.get(5)).isEqualTo(6);
+        assertThat(arrayStack.size()).isEqualTo(6);
     }
 
     @Test
     @DisplayName("스택 데이터를 pop 할 수 있다.")
     void pop() {
         // when
-        int v1 = stack.pop();
-        int v2 = stack.pop();
-        int v3 = stack.pop();
+        int v1 = arrayStack.pop();
+        int v2 = arrayStack.pop();
+        int v3 = arrayStack.pop();
 
         // then
         assertThat(v1).isEqualTo(3);
         assertThat(v2).isEqualTo(2);
         assertThat(v3).isEqualTo(1);
-        assertThat(stack.size()).isEqualTo(0);
+        assertThat(arrayStack.size()).isEqualTo(0);
     }
 
     @Test
     @DisplayName("스택이 비어있을 때 pop 하면 EmptyStackException 예외가 발생한다.")
     void pop_exception() {
         // given
-        stack.pop();
-        stack.pop();
-        stack.pop();
+        arrayStack.pop();
+        arrayStack.pop();
+        arrayStack.pop();
 
         // when, then
-        assertThatThrownBy(() -> stack.pop())
+        assertThatThrownBy(() -> arrayStack.pop())
             .isInstanceOf(EmptyStackException.class);
     }
 }
