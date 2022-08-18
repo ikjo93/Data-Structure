@@ -3,17 +3,17 @@ package whiteship.stack;
 import java.util.Arrays;
 import java.util.EmptyStackException;
 
-public class Stack {
+public class ArrayStack {
 
     private static final int DEFAULT_CAPACITY = 10;
     private int[] values;
     private int size = 0;
 
-    public Stack() {
+    public ArrayStack() {
         this(DEFAULT_CAPACITY);
     }
     
-    public Stack(int capacity) {
+    public ArrayStack(int capacity) {
         values = new int[capacity];
     }
 
@@ -61,4 +61,5 @@ public class Stack {
         values = new int[DEFAULT_CAPACITY];
         size = 0;
     }
+
 }
