@@ -1,4 +1,4 @@
-package whiteship;
+package whiteship.linkedlist;
 
 public class ListNode {
 
