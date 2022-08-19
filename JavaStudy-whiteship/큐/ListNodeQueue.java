@@ -3,12 +3,13 @@ package whiteship.queue;
 import java.util.NoSuchElementException;
 import whiteship.linkedlist.ListNode;
 
-public class ListNodeQueue {
+public class ListNodeQueue implements Queue {
 
     private ListNode first;
     private ListNode last;
     private int size = 0;
 
+    @Override
     public void add(int data) {
         ListNode node = new ListNode(data);
         if (last != null) {
@@ -23,7 +24,8 @@ public class ListNodeQueue {
         size++;
     }
 
-    public int poll() {
+    @Override
+    public int remove() {
         if (first == null) {
             throw new NoSuchElementException();
         }
@@ -40,6 +42,7 @@ public class ListNodeQueue {
         return result;
     }
 
+    @Override
     public int peek() {
         if (first == null) {
             throw new NoSuchElementException();
@@ -48,14 +51,17 @@ public class ListNodeQueue {
         return first.getValue();
     }
 
+    @Override
     public boolean isEmpty() {
         return first == null;
     }
 
+    @Override
     public int size() {
         return size;
     }
 
+    @Override
     public void clear() {
         first = null;
         last = null;
