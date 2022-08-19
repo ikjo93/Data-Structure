@@ -3,7 +3,7 @@ package whiteship.stack;
 import java.util.Arrays;
 import java.util.EmptyStackException;
 
-public class ArrayStack {
+public class ArrayStack implements Stack {
 
     private static final int DEFAULT_CAPACITY = 10;
     private int[] values;
@@ -17,6 +17,7 @@ public class ArrayStack {
         values = new int[capacity];
     }
 
+    @Override
     public void push(int data) {
         values[size++] = data;
         if (size == values.length) {
@@ -24,6 +25,7 @@ public class ArrayStack {
         }
     }
 
+    @Override
     public int pop() {
         if (size == 0) {
             throw new EmptyStackException();
@@ -49,6 +51,12 @@ public class ArrayStack {
         values = Arrays.copyOf(values, Math.max(DEFAULT_CAPACITY, newCapacity));
     }
 
+    @Override
+    public int peek() {
+        return values[size - 1];
+    }
+
+    @Override
     public int get(int index) {
         checkValidIndex(index);
 
@@ -61,13 +69,14 @@ public class ArrayStack {
         }
     }
 
+    @Override
     public int size() {
         return size;
     }
 
+    @Override
     public void clear() {
         values = new int[DEFAULT_CAPACITY];
         size = 0;
     }
-
 }
